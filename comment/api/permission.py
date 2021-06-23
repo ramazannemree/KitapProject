@@ -1,0 +1,1 @@
+#Yorum atabilmek için satın almak gerekli!

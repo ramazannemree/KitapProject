@@ -1,0 +1,8 @@
+{% autoescape off %}
+    
+Merhaba {{user.first_name}} ,
+
+{{ body }}
+http://{{domain}}{% url url_name uidb64=uid token=token %}
+
+{% endautoescape %}

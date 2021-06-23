@@ -1,0 +1,97 @@
+{% extends 'kullanici/profile/profile_base.html' %}
+
+{% load static %}
+
+{% block profile_body %}
+
+{% for mesaj in mesajlar %}
+
+{% if mesaj.is_staff == True %}
+<div class="d-flex align-items-start py-4 border-bottom mt-4"><img class="rounded-circle" src="{% static 'img/about/helpdesk-avatar.jpg' %}" width="50" alt="Michael Davis">
+            <div class="ps-3">
+              <h6 class="fs-md mb-2">Site Görevlisi</h6>
+              <p class="fs-md mb-1">{{ mesaj.msg_text }}</p><span class="fs-ms text-muted"><i class="ci-time align-middle me-2"></i>{{ mesaj.message_time }}</span>
+            </div>
+</div>
+
+                {% else %}
+              <!-- Comment-->
+              <div class="d-flex align-items-start border-bottom py-4 mt-4"><img class="rounded-circle" src="{% static request.user.profile.image %}" width="50" alt="Susan Gardner">
+                <div class="ps-3">
+                  <h6 class="fs-md mb-2">{{ request.user.first_name|title }} {{ request.user.last_name|title }}</h6>
+                  <p class="fs-md mb-1">{{ mesaj.msg_text }}</p><span class="fs-ms text-muted"><i class="ci-time align-middle me-2"></i>{{ mesaj.message_time }}</span>
+                </div>
+              </div>
+                {% endif %}
+
+
+
+{% endfor %}
+
+<h3 class="h5 mt-2 pt-4 pb-2">Mesaj Bırakın</h3>
+          <form class="needs-validation" action="{% url 'single-ticket' chat.id %}" method="POST" novalidate>
+              {% csrf_token %}
+            <div class="mb-3">
+              {% for field in mesaj_form %}
+                    {{ field }}
+                    {% endfor %}
+                {% include 'base/form_errors.html' %}
+            </div>
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+              <div class="form-check">
+
+              </div>
+              <button class="btn btn-primary my-2" type="submit">Submit message</button>
+            </div>
+          </form>
+
+
+
+
+
+
+
+
+{% endblock %}
+{% block profil_navigation %}
+Destek Mesajları
+{% endblock %}
+{% block ust_icerik %}
+ <div class="d-flex w-100 text-light text-center me-3">
+              <div class="fs-ms px-3">
+                <div class="fw-medium">Date Submitted</div>
+                <div class="opacity-60">{{ chat.created_time }}</div>
+              </div>
+
+              <div class="fs-ms px-3">
+                <div class="fw-medium">Type</div>
+                <div class="opacity-60">{{ chat.message_type }}</div>
+              </div>
+                <div class="fs-ms px-3">
+                <div class="fw-medium">Subject</div>
+                <div class="opacity-60">{{ chat.subject }}</div>
+              </div>
+              <div class="fs-ms px-3">
+                <div class="fw-medium">Priority</div><span class="badge bg-{{ chat.priority }}">
+                     {% if chat.priority == 'danger' %}
+                        Acil
+                      {% elif chat.priority == 'warning' %}
+                        Yüksek
+                      {% elif chat.priority == 'info' %}
+                        Orta
+                    {% elif chat.priority == 'success' %}
+                      Düşük
+                    {% endif %}
+              </span>
+              </div>
+
+            </div>
+
+{% endblock %}
+{% block baslik %}
+Destek Talepleri
+{% endblock %}
+
+{% block sayfa_baslik %}
+
+{% endblock %}

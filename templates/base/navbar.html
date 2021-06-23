@@ -1,0 +1,60 @@
+{% load static %}
+
+ <ul class="navbar-nav">
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Alışveriş</a>
+                  <div class="dropdown-menu p-0">
+                    <div class="d-flex flex-wrap flex-sm-nowrap px-2">
+                      <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
+                        <div class="widget widget-links">
+                          <ul class="widget-list">
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Roman</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Şiir</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Bilim Kurgu</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Macera</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Korku</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Polisiye</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">İlkokul Ders Kitabı</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Lise Ders Kitabı</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Üniversiteye Hazırlık</a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Lisans ve Lisansüstü </a></li>
+                            <li class="widget-list-item"><a class="widget-list-link" href="">Bilgisayar</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Hesap</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Alım İşlemleri</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="">Sipariş geçmişi</a></li>
+                        <li><a class="dropdown-item" href="">Profil Ayarları</a></li>
+                        <li><a class="dropdown-item" href="">Favoriler</a></li>
+                        <li><a class="dropdown-item" href="">Mesajlarım</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Satış İşlemleri</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="">Ayarlar</a></li>
+                        <li><a class="dropdown-item" href="{% url 'favorite_list' %}">Favoriler</a></li>
+                        <li><a class="dropdown-item" href="">Satışlar</a></li>
+                        <li><a class="dropdown-item" href="{% url 'view_products' %}">Ürünlerim</a></li>
+                        <li><a class="dropdown-item" href="{% url 'add_product' %}">Ürün Ekle</a></li>
+                      </ul>
+                    </li>
+                    <li><a class="dropdown-item" href="">Giriş Yap</a></li>
+                    <li><a class="dropdown-item" href="">Şifre Güncelle</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Hakkımızda</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="">Biz Kimiz ?</a></li>
+                    <li><a class="dropdown-item" href="">Nasıl Çalışır ?</a></li>
+                    <li class="dropdown"><a class="dropdown-item " href="#" data-bs-toggle="dropdown">Yardım</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>

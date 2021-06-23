@@ -1,0 +1,153 @@
+{% extends 'kullanici/profile/profile_base.html' %}
+
+{% load static %}
+
+{% block profile_body %}
+<form xmlns="http://www.w3.org/1999/html" method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+
+    {% for field in form %}
+
+
+   {% if field.name == 'resim' and request.user.profile.image != 'default.jpg' %}
+   <div class="bg-secondary rounded-3 p-4 mb-4">
+       <div class="d-flex align-items-center">
+       <img src="{{ request.user.profile.image.url }}" class="rounded" width="70" alt="">
+
+
+                <div class="ps-3">
+                  <label class="btn btn-light btn-shadow btn-sm mb-2  btn-file">
+                  <i class="ci-loading me-2"></i>Change avatar <input type="file" name="resim" id="id_resim" style="display: none;">
+                </label>
+
+
+                  <div class="p mb-0 fs-ms text-muted">Upload JPG, GIF or PNG image. 300 x 300 required.</div>
+                </div>
+              </div>
+            </div>
+
+  <div class="row gx-4 gy-3">
+      {% elif field.name == 'resim' %}
+        <div class="bg-secondary rounded-3 p-4 mb-4">
+       <div class="d-flex align-items-center">
+           <div class=" rounded-circle position-relative flex-shrink-0 mx-auto mb-2 mx-md-0 mb-md-0" style="width: 6.375rem;"><span class="badge bg-warning position-absolute end-0 mt-n2" data-bs-toggle="tooltip" title="Reward points"></span>
+
+            <p class="" id="profileImage" style="background-color:{{ request.user.profile.bg_clor }}" ><span class="text text-center">{{ request.user.first_name.0}}{{request.user.last_name.0}}</span></p></div>
+
+
+                <div class="ps-md-3">
+                  <label class="btn btn-light btn-shadow btn-sm mb-2  btn-file">
+                  <i class="ci-loading me-2"></i>Change avatar <input type="file" id="id_image" style="display: none;">
+                </label>
+
+
+                  <div class="p mb-0 fs-ms text-muted">Upload JPG, GIF or PNG image. 300 x 300 required.</div>
+                </div>
+</div>          </div>
+
+
+
+
+  <div class="row gx-4 gy-3">
+      {% elif field.name == 'adres' %}
+      <div class="col-md-12">
+                <label class="form-label" for={{ field.id_for_label }}>{{ field.label }}</label>
+                {{ field }}
+                  {% include 'base/form_errors.html' %}
+              </div>
+{% else %}
+
+
+              <div class="col-md-6">
+                <label class="form-label" for={{ field.id_for_label }}>{{ field.label }}</label>
+                {{ field }}
+                  {% include 'base/form_errors.html' %}
+              </div>
+
+
+              {% endif %}
+
+              {% endfor %}
+
+   </div>
+  <br>
+              <div class="col-12">
+                <hr class="mt-2 mb-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="subscribe_me" checked>
+                    <label class="form-check-label" for="subscribe_me">Subscribe me to Newsletter</label>
+                  </div>
+                  <input class="btn btn-primary mt-3 mt-sm-0" type="submit" value="Update profile">
+                </div>
+              </div>
+            </div>
+
+          </form>
+        <div hidden id="il_div">{{form.il.value }}</div>
+        <div hidden id="ilce_div">{{form.ilce.value }}</div>
+
+{% endblock %}
+
+ {% block javascript %}
+<script src="{% static 'js/jquery.letterpic.min.js' %}"></script>
+<script type="text/javascript">
+$(".demo").letterpic({
+
+  // an array of colors
+  colors: ["#33D4FF","#ff0000","#cc0066","#00b300","#ff9900","#0000e6"],
+
+  // an array of gradients
+
+
+  // font family
+  font: 'Arial',
+
+  // 'color', 'images' or 'gradients'
+  fill: 'color',
+
+  // color of image overlay
+
+
+  // font color
+  fontColor: '#fff',
+
+  // font size
+  fontSize: .45
+
+});
+
+</script>
+
+{% endblock %}
+
+{% block vue %}
+{% endblock %}
+
+    {% block js %}
+    <script>
+    if ("{{form.il.value}}"!="None"){
+        console.log("{{form.il.value}}");
+        var il = "{{form.il.value}}";
+        $('#il_select option[value=İSTANBUL]').attr('selected','selected');
+
+
+    }
+    //console.log("{{form.il.value}}"
+
+
+     </script>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js" type="text/javascript"></script>
+
+
+
+      <script src="{% static 'js/kullanici/profile.js' %}"></script>
+
+
+
+
+
+
+    {% endblock %}

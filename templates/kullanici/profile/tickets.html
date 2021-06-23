@@ -1,0 +1,115 @@
+
+{% extends 'kullanici/profile/profile_base.html' %}
+
+{% load static %}
+
+{% block profile_body %}
+
+
+<form class="needs-validation modal fade" method="post" id="open-ticket" action="{% url 'destek' %}" tabindex="-1" novalidate>
+       {% csrf_token %}
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Submit new ticket</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted fs-sm">We normally respond tickets within 2 business days.</p>
+            <div class="row gx-4 gy-3">
+              {% for field in form %}
+              {% if field.name == 'priority' or field.name == 'message_type' %}
+                  <div class="col-sm-6">
+                <label class="form-label" for={{ field.id_for_label }} >{{ field.label }}</label>
+                {{ field}}
+                  {% include 'base/form_errors.html' %}
+                  </div>
+              {% else %}
+              <div class="col-12">
+                <label class="form-label" for={{ field.id_for_label }} >{{ field.label }}</label>
+                {{ field }}
+                {% include 'base/form_errors.html' %}
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            </div>
+
+
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Submit Ticket</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+ <section class="col-lg-12">
+
+
+          <!-- Tickets list-->
+          <div class="table-responsive fs-md mb-4">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>Ticket Subject</th>
+                  <th>Date Submitted</th>
+                  <th>Type</th>
+                  <th>Priority</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+              {% if chats %}
+              {% for chat in chats %}
+                <tr>
+                  <td class="py-3"><a class="nav-link-style fw-medium" href="{% url 'single-ticket' chat.id %}">{{ chat.subject|title }}</a></td>
+                  <td class="py-3">{{ chat.created_time }}</td>
+                  <td class="py-3">{{ chat.message_type }}</td>
+                  <td class="py-3"><span class="badge bg-{{ chat.priority }} m-0">
+                      {% if chat.priority == 'danger' %}
+                        Acil
+                      {% elif chat.priority == 'warning' %}
+                        Yüksek
+                      {% elif chat.priority == 'info' %}
+                        Orta
+                    {% elif chat.priority == 'success' %}
+                      Düşük
+                    {% endif %}
+                  </span></td>
+                </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td>
+                    Hiç Mesaj Bulunamadı
+                </td>
+                  <td></td> <td></td> <td></td>
+              </tr>
+
+              {% endif %}
+
+              </tbody>
+            </table>
+          </div>
+          <div class="text-end">
+
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#open-ticket">Submit new ticket</button>
+          </div>
+        </section>
+      </div>
+    </div>
+{% endblock %}
+{% block profil_navigation %}
+Destek Mesajları
+{% endblock %}
+
+{% block baslik %}
+Destek Talepleri
+{% endblock %}
+
+{% block sayfa_baslik %}
+Tüm Destek Talepleriniz
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block body %}
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+    <!-- Dashboard header-->
+    <div class="page-title-overlap bg-accent pt-4">
+      <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
+        <div class="d-flex align-items-center pb-3">
+          <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="Createx Studio"></div>
+          <div class="ps-3">
+            <h3 class="text-light fs-lg mb-0">Createx Studio</h3><span class="d-block text-light fs-ms opacity-60 py-1">Member since November 2019</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mb-5 pb-3">
+      <div class="bg-light shadow-lg rounded-3 overflow-hidden">
+        <div class="row">
+          <!-- Sidebar-->
+          {% include 'products/side_bar.html' %}
+          <!-- Content-->
+          <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+            <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+              <!-- Title-->
+              <div class="d-sm-flex flex-wrap justify-content-between align-items-center border-bottom">
+                <h2 class="h3 py-2 me-2 text-center text-sm-start">Ürünlerim<span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">{{ products.count }}</span></h2>
+              <!-- order by-->
+                <div class="py-2">
+                  <div class="d-flex flex-nowrap align-items-center pb-3">
+                    <label class="form-label fw-normal text-nowrap mb-0 me-2" for="sorting">Sırala:</label>
+                    <form id="ordering"action="{% url 'view_products' %}" method="POST">
+                    {% csrf_token %}
+                    <select class="form-select form-select-sm me-2" name="ordering">
+                      <option selected>Eklenme Tarihi</option>
+                      <option>Ürün Adı</option>
+                      <option>Fiyat</option>
+                    </select>
+                    <div>
+                  </div>
+                  </form>
+                  <button form="ordering" class="btn btn-outline-secondary btn-sm px-2" type="submit"><i class="ci-arrow-down"></i></button>
+                  </div>
+                </div>
+              
+              </div>
+              <!-- Product-->
+              {% include 'products/ajax_product.html' %}
+              
+            </div>
+            <p class="text-center mt-2">
+              <button id="loadMore" class="btn btn-dark">Daha fazla yükle</a>
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Toolbar for handheld devices (Marketplace)-->
+    <div class="handheld-toolbar">
+      <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="dashboard-favorites.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Favorites</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="marketplace-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">3</span></span><span class="handheld-toolbar-label">$56.00</span></a></div>
+    </div>
+    <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
+  </body>
+  
+  {% endblock %}
+
+  {% block javascript %}
+  <script>
+    $(".product-box").slice(0,5).show();
+    $("#loadMore").on('click',function(){
+      $(".product-box:hidden").slice(0,5).show();
+      if($(".product-box:hidden").length == 0){
+        $("#loadMore").fadeOut();
+      }
+    })
+  </script>
+  {% endblock %}
+
+  {% block vue %}
+  {% endblock %}

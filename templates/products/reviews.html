@@ -1,0 +1,141 @@
+{% load static %}
+          <!-- Reviews-->
+          <div class="row pt-2 pb-3">
+            <div class="col-lg-4 col-md-5">
+              <h3 class="h4 mb-4">{{ reviews.count }} Yorum </h3>
+              <div class="star-rating me-2">
+                <i {% if avg_rate > 0 %} class="ci-star-filled fs-sm text-accent me-1" {% else %} class="ci-star fs-sm text-muted me-1" {% endif %} ></i>
+                <i {% if avg_rate > 1 %} class="ci-star-filled fs-sm text-accent me-1" {% else %} class="ci-star fs-sm text-muted me-1" {% endif %} ></i>
+                <i {% if avg_rate > 2 %} class="ci-star-filled fs-sm text-accent me-1" {% else %} class="ci-star fs-sm text-muted me-1" {% endif %} ></i>
+                <i {% if avg_rate > 3 %} class="ci-star-filled fs-sm text-accent me-1" {% else %} class="ci-star fs-sm text-muted me-1" {% endif %} ></i>
+                <i {% if avg_rate > 4 %} class="ci-star-filled fs-sm text-accent me-1" {% else %} class="ci-star fs-sm text-muted me-1" {% endif %} ></i>
+              </div><span class="d-inline-block align-middle">{{ avg_rate }}</span>
+            </div>
+            <div class="col-lg-8 col-md-7">
+              <div class="d-flex align-items-center mb-2">
+                <div class="text-nowrap me-3"><span class="d-inline-block align-middle text-muted">5</span><i class="ci-star-filled fs-xs ms-1"></i></div>
+                <div class="w-100">
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {% widthratio ratelist.0 reviews.count 1 %}%;" aria-valuenow="{{ ratelist.0 }}" aria-valuemax="100"></div>
+                  </div>
+                </div><span class="text-muted ms-3">{% widthratio ratelist.0 100 1 %}</span>
+              </div>
+              <div class="d-flex align-items-center mb-2">
+                <div class="text-nowrap me-3"><span class="d-inline-block align-middle text-muted">4</span><i class="ci-star-filled fs-xs ms-1"></i></div>
+                <div class="w-100">
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: {% widthratio ratelist.1 reviews.count 1 %}%; background-color: #a7e453;"  aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div><span class="text-muted ms-3">{% widthratio ratelist.1 100 1 %}</span>
+              </div>
+              <div class="d-flex align-items-center mb-2">
+                <div class="text-nowrap me-3"><span class="d-inline-block align-middle text-muted">3</span><i class="ci-star-filled fs-xs ms-1"></i></div>
+                <div class="w-100">
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: {% widthratio ratelist.2 reviews.count 1 %}%; background-color: #ffda75;"  aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div><span class="text-muted ms-3">{% widthratio ratelist.2 100 1 %}</span>
+              </div>
+              <div class="d-flex align-items-center mb-2">
+                <div class="text-nowrap me-3"><span class="d-inline-block align-middle text-muted">2</span><i class="ci-star-filled fs-xs ms-1"></i></div>
+                <div class="w-100">
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar" role="progressbar" style="width: {% widthratio ratelist.3 reviews.count 1 %}%; background-color: #fea569;"  aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div><span class="text-muted ms-3">{% widthratio ratelist.3 100 1 %}</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <div class="text-nowrap me-3"><span class="d-inline-block align-middle text-muted">1</span><i class="ci-star-filled fs-xs ms-1"></i></div>
+                <div class="w-100">
+                  <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width:{% widthratio ratelist.4 reviews.count 1 %}%;" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div><span class="text-muted ms-3">{% widthratio ratelist.4 100 1 %}</span>
+              </div>
+            </div>
+          
+          <hr class="mt-4 mb-3">
+          <div class="row py-4">
+            <!-- Reviews list-->
+            <div class="col-md-7">
+              
+              {% for review in reviews %}
+              <!-- Reviews -->
+              <div class="product_comment">
+                <div class="product-review pb-4 mb-4 border-bottom">
+                <div class="d-flex mb-3">
+                  <div class="d-flex align-items-center me-4 pe-2"><img class="rounded-circle" src="{% static 'img/shop/reviews/01.jpg' %}" width="50" alt="Rafael Marquez">
+                    <div class="ps-3">
+                      <h6 class="fs-sm mb-0">{{ review.user.username }}</h6><span class="fs-ms text-muted">{{ review.create_at }}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="star-rating">
+                      <i {% if review.rate > 0 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      <i {% if review.rate > 1 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      <i {% if review.rate > 2 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      <i {% if review.rate > 3 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      <i {% if review.rate > 4 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="fs-md mb-2">{{ review.comment }}</p>
+              </div>    
+              </div>
+               {% endfor %}         
+              <div class="text-center">
+                <button class="btn btn-outline-accent" type="button" id="loadmore"><i class="ci-reload me-2"></i>Daha fazla yükle</button>
+              </div>
+            </div>
+           
+            <!-- Leave review form-->
+            <div class="col-md-5 mt-2 pt-4 mt-md-0 pt-md-0">
+              <div class="bg-secondary py-grid-gutter px-grid-gutter rounded-3">
+                <h3 class="h4 pb-2">Bir yorum yazın</h3>
+                <form action="{% url 'detail_product' product.id %}" class="review-form" method="POST">
+                  <div class="md-3 row gx-4 gy-3 form-group">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    {% if field.name == "rate" %} 
+                    {% else %}
+                           <div class="md-6 form-group">
+                            <label class="form-label" for={{ field.id_for_label }}>{{field.label}}*</label>
+                             {{field}}
+                           </div>  
+                          {% endif %}
+                        {% endfor %}
+
+                        <div class="form-group">
+                          <div class="input-rating"> 
+                            <div class="rating">
+                              <div>
+                                <label class="form-label">Puan*</label>
+                              </div>
+                              <div class="stars">
+                                <input type="radio" name="rate" value="5" id="star-5" ><label for="star-5"></label>
+                                <input type="radio" name="rate" value="4" id="star-4" ><label for="star-4"></label>
+                                <input type="radio" name="rate" value="3" id="star-3" ><label for="star-3"></label>
+                                <input type="radio" name="rate" value="2" id="star-2" ><label for="star-2"></label>
+                                <input type="radio" name="rate" value="1" id="star-1" ><label for="star-1"></label> 
+                              </div>                                                                 
+                            </div>                              
+                          </div>
+                        </div>
+                        <!--Satın alınmamışsa yorum yapılmasına izin verilmeyecek.-->
+                        {% if user.id is not None %}
+                     <input class="btn btn-primary md-3" type="submit" value="Gönder">
+                     {% else %}
+                       <p> Yorum eklemek için <a href="{% url 'login' %}">giriş</a> yapınız.</p>
+                      {% endif %}
+                  </div>                 
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+{% block vue %}
+{% endblock %}

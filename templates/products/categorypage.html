@@ -1,0 +1,181 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block css %}
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+    <!-- Page Title-->
+    <div class="page-title-overlap bg-dark pt-4">
+      <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+        <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+              <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
+              <li class="breadcrumb-item text-nowrap"><a href="#">Shop</a>
+              </li>
+              <li class="breadcrumb-item text-nowrap active" aria-current="page">Grid left sidebar</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+          <h1 class="h3 text-light mb-0">{{ name }}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="container pb-5 mb-2 mb-md-4">
+      <div class="row">
+        <!-- Sidebar-->
+        <aside class="col-lg-4">
+          <!-- Sidebar-->
+          <div class="offcanvas offcanvas-collapse bg-white w-100 rounded-3 shadow-lg py-1" id="shop-sidebar" style="max-width: 22rem;">
+            <div class="offcanvas-body py-grid-gutter px-lg-grid-gutter">
+              <!-- Categories-->
+              <div class="widget widget-categories mb-4 pb-4 border-bottom">
+                <h3 class="widget-title">Filtreleme</h3>
+                <div class="accordion mt-n1" id="shop-categories">
+                  <!-- Categoriler-->
+                  <div class="accordion-item">
+                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#shoes" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="shoes">Kategoriler</a></h3>
+                    <div class="accordion-collapse collapse show" id="shoes" data-bs-parent="#shop-categories">
+                      <div class="accordion-body">
+                        <div class="widget widget-links widget-filter">
+                          <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;" data-simplebar data-simplebar-auto-hide="false">
+                            {% for category in categories %}
+                            <li class="widget-list-item widget-filter-item">
+                              <a class="widget-list-link d-flex justify-content-between align-items-center" href="{% url 'category_page' category.categories__slug %}">
+                                <span class="widget-filter-item-text">{{ category.categories__category_name }}</span>
+                                <span class="fs-xs text-muted ms-3">{{ category.id__count }}</span></a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Price range-->
+              <form method="POST">
+                {% csrf_token %}
+              <div class="widget mb-4 pb-4 border-bottom">
+                <h3 class="widget-title">Fiyat</h3>
+                <div class="range-slider" data-start-min="{{ min_price }}" data-start-max="{{ max_price }}" data-min="{{ min_price }}" data-max="{{ max_price }}" data-step="1">
+                  <div class="range-slider-ui"></div>
+                  <div class="d-flex pb-1">
+                    <div class="w-50 pe-2 me-2">
+                      <div class="input-group input-group-sm"><span class="input-group-text">₺</span>
+                        <input name="min_price" class="form-control range-slider-value-min" type="text">
+                      </div>
+                    </div>
+                    <div class="w-50 ps-2">
+                      <div class="input-group input-group-sm"><span class="input-group-text">₺</span>
+                        <input name="max_price" class="form-control range-slider-value-max" type="text">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Filter by Brand-->
+              <div class="widget widget-filter mb-4 pb-4 border-bottom">
+                <h3 class="widget-title">Yazar</h3>
+                <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
+                  {% for author in authors %}
+                  <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                    <div class="form-check">
+                      <input  name="author" value="{{ author.author }}" class="form-check-input" type="checkbox">
+                      <label class="form-check-label widget-filter-item-text">{{ author.author }}</label>
+                    </div><span class="fs-xs text-muted">{{ author.id__count }}</span>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div class="widget widget-filter mb-2 pb-4 border-bottom">
+                <input class="btn btn-primary btn-sm d-block w-100" type="submit" value="Filtrele">
+              </div>
+              </form>
+            </div>
+          </div>
+        </aside>
+        <!-- Content  -->
+        <section class="col-lg-8">
+          <!-- Toolbar-->
+          <div class="justify-content-center justify-content-sm-between pt-5 pb-4 pb-sm-5">
+            <!--<div class="d-flex flex-row-reverse">
+              <div class="d-flex align-items-center flex-nowrap me-3 me-sm-4 pb-3">
+                <label class="text-light opacity-75 text-nowrap fs-sm me-2 d-none d-sm-block" for="sorting">Sort by:</label>
+                <select class="form-select" id="sorting">
+                  <option>Low - Hight Price</option>
+                  <option>High - Low Price</option>
+                  <option>Average Rating</option>
+                  <option>A - Z Order</option>
+                  <option>Z - A Order</option>
+                </select><span class="fs-sm text-light opacity-75 text-nowrap ms-2 d-none d-md-block">of 287 products</span>
+              </div>
+            </div>-->
+          </div>
+          <!-- Products grid-->
+          <div class="row mx-n2">
+            <!-- Product-->
+            {% for i in rate_list %}
+            <div class="col-md-4 col-sm-6 px-2 mb-4">
+              <div class="card product-card">
+                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><a href="{% url 'add_favorite' i.product.id %}"><i {% if i.fav %} class="icon-heart" {% else %} class="icon-heart-empty" {% endif %}></i></a></button>
+                <a class="card-img-top d-block overflow-hidden" href="{% url 'detail_product' i.product.id %}"><img src="{{ i.product.first_image }}" alt="Product"></a>
+                <div class="card-body py-2">
+                  <h3 class="product-title fs-sm"><a href="{% url 'detail_product' i.product.id %}">{{ i.product.product_name }}</a></h3>
+                  <div class="d-flex justify-content-between">
+                    <div class="product-price"><span class="text-accent">{{ i.product.price }}₺</span></div>
+                    <div class="star-rating">
+                       {% if i.rate.rate__avg %}
+                      <i {% if i.rate.rate__avg > 0 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      <i {% if i.rate.rate__avg > 1 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      <i {% if i.rate.rate__avg > 2 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      <i {% if i.rate.rate__avg > 3 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      <i {% if i.rate.rate__avg > 4 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                      {% else %}
+                      <i class="star-rating-icon ci-star"></i>
+                      <i class="star-rating-icon ci-star"></i>
+                      <i class="star-rating-icon ci-star"></i>
+                      <i class="star-rating-icon ci-star"></i>
+                      <i class="star-rating-icon ci-star"></i>
+                      {% endif %}
+               </div>
+
+                  </div>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'add_basket' i.product.id %}"><button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>{% if i.basket %} Sepete Eklendi {% else %} Sepete Ekle {% endif %}</button></a>
+                </div>
+              </div>
+              <hr class="d-sm-none">
+            </div>
+            {% endfor %}
+          </div>
+          <hr class="my-3">
+          <!-- Pagination-->
+          <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+            </ul>
+            <ul class="pagination">
+              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+              <li class="page-item active d-none d-sm-block" aria-current="page"><span class="page-link">1<span class="visually-hidden">(current)</span></span></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">4</a></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">5</a></li>
+            </ul>
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+            </ul>
+          </nav>
+        </section>
+      </div>
+    </div>
+  </body>
+{% endblock %}
+{% block vue%}
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+
+<div class="page-title-overlap bg-dark pt-4">
+  <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+    <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+          <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Anasayfa</a></li>
+          <li class="breadcrumb-item text-nowrap"><a href="#">Hesabım</a>
+          </li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">Favoriler</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+      <h1 class="h3 text-light mb-0">Favorilerim</h1>
+    </div>
+  </div>
+</div>
+<div class="container pb-5 mb-2 mb-md-4">
+  <div class="row">
+    <!-- Sidebar-->
+    {% include 'profile_sidebar.html' %}
+    <!-- Content  -->
+    <section class="col-lg-8">
+      <!-- Toolbar-->
+      <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-3">
+        <h6 class="fs-base text-light mb-0">Favorilerim :  {{ favarites_count }}</h6>
+      </div>
+      <!-- Wishlist-->
+      <!-- Item-->
+      {% for favorite in favorites %}
+      <div class="fav_list">
+        <div class="d-sm-flex justify-content-between mt-lg-4 mb-4 pb-3 pb-sm-2 border-bottom">
+        <div class="d-block d-sm-flex align-items-start text-center text-sm-start"><a class="d-block flex-shrink-0 mx-auto me-sm-4" href="{% url 'detail_product' favorite.id %}" style="width: 10rem;"><img src="{{ favorite.first_image }}" alt="{{ favorite.product_name }}"></a>
+          <div class="pt-2">
+            <h3 class="product-title fs-base mb-2"><a href="{% url 'detail_product' favorite.id %}">{{ favorite.product_name }}</a></h3>
+            <div class="fs-sm"><span class="text-muted me-2">Satıcı:</span>{{ favorite.user }}</div>
+            <div class="fs-lg text-accent pt-2">{{ favorite.price }} ₺</div>
+          </div>
+        </div>
+        <div class="row mx-sm-0 align-items-center">
+          <div class="py-2 me-2">
+            <a href="{% url 'add_favorite' favorite.id %}">
+            <button class="btn btn-outline-accent" type="button"><i class="icon-heart fs-lg-4"></i></button>
+          </a>
+          </div>
+        </div>
+      </div>
+      </div>
+      
+      {% endfor %}
+      <div class="text-center">
+        <button class="btn btn-outline-accent" type="button" id="loadmore"><i class="ci-reload me-2"></i>Daha fazla yükle</button>
+      </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+  $(".fav_list").slice(0,4).show();
+  $("#loadmore").on('click',function(){
+    $(".fav_list:hidden").slice(0,4).show();
+    if($(".fav_list:hidden").length == 0){
+      $("#loadmore").fadeOut();
+    }
+  })
+</script>
+{% endblock %}
+
+{% block vue %}
+{% endblock %}

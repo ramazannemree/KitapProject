@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block body %}
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+    <!-- Dashboard header-->
+    <div class="page-title-overlap bg-accent pt-4">
+      <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
+        <div class="d-flex align-items-center pb-3">
+          <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="Createx Studio"></div>
+          <div class="ps-3">
+            <h3 class="text-light fs-lg mb-0">Createx Studio</h3><span class="d-block text-light fs-ms opacity-60 py-1">Member since November 2019</span>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="text-sm-end me-5">
+            <div class="text-light fs-base">Total sales</div>
+            <h3 class="text-light">426</h3>
+          </div>
+          <div class="text-sm-end">
+            <div class="text-light fs-base">Seller rating</div>
+            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+            </div>
+            <div class="text-light opacity-60 fs-xs">Based on 98 reviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mb-5 pb-3">
+      <div class="bg-light shadow-lg rounded-3 overflow-hidden">
+        <div class="row">
+          <!-- Sidebar-->
+          {% include 'products/side_bar.html' %}
+          <!-- Content-->
+          <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+            <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+              <!-- Title-->
+              <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
+                <h2 class="h3 py-2 me-2 text-center text-sm-start">Ürün Güncelleme</h2>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row gx-4 gy-3">
+                    {% for field in form %}                    
+                        {% if field.name == 'price' or field.name == 'amount'%}                        
+                          <div class="col-sm-6">
+                            <label class="form-label" for={{ field.id_for_label }}>{{field.label}}*</label>
+                            {{ field }}
+                            {% include 'form_errors.html' %}                        
+                          </div>
+                        {% elif field.name == 'categories' %}
+                          <div class="py-2">
+                            <div class="col-sm-12">
+                              <label class="form-label" for={{ field.id_for_label }}>{{field.label}}*</label>
+                              {{ field }}
+                              {% include 'form_errors.html' %}   
+                            </div>
+                          </div>  
+                          <label>*En fazla 3 kategori seçiniz!</label>      
+                         {% else %}
+                          <div class="py-2">
+                            <div class="col-sm-12">
+                              <label class="form-label" for={{ field.id_for_label }}>{{field.label}}*</label>
+                              {{ field }}
+                              {% include 'form_errors.html' %}      
+                            </div>       
+                          </div>       
+                        {% endif %}  
+                    {% endfor%}
+                    {{ formset.management_form }}  
+                    {% for field in formset %}
+                        {{ field }}
+                    {% endfor%}
+                  </div>
+                <input class="btn btn-primary d-block w-100 mt-3" type="submit" value="Gönder">
+              </form>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+{% endblock %}

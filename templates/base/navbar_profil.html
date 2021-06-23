@@ -1,0 +1,67 @@
+{% load static %}
+
+<div class="dropdown">
+                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2 " href="{% url 'login' %}" data-bs-toggle="dropdown">
+                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+                 <div class="navbar-tool-text ms-n3"><small>{% if user.is_authenticated %} {{user.first_name}} {{user.last_name}} {% else %} Giriş Yapın {% endif %} </small>Hesabım</div></a>
+                    <div class="dropdown-menu p-0">
+                         {% if user.is_anonymous %}
+                    <div class="d-flex flex-wrap flex-sm-nowrap px-2">
+                      <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
+                        <div class="widget widget-links mb-2">
+
+                          <ul class="widget-list">
+                            <li class="widget-list-item">
+                                <div class="widget-cart-item py-2">
+                                    <div class="d-flex align-items-center">
+                                        <a class="widget-list-link btn btn-primary" href="{% url 'login' %}" style="width: 100%">Login</a>
+                                    </div>
+                                </div>
+                            </li>
+                              <hr>
+                             <li class="widget-list-item">
+                                <div class="widget-cart-item py-2 mt-2">
+                                    <div class="d-flex align-items-center">
+                                        <a class="widget-list-link btn btn-outline-primary" href="{% url 'register' %}" style="width: 100%"> Register</a>
+                                    </div>
+                                </div>
+                            </li>
+                          </ul>
+                        </div>
+
+                      </div>
+                    </div>
+                              {% else %}
+                        <ul class="widget-list">
+
+
+                            </li>
+                                <li><a class="dropdown-item" href="{% url 'profile' %}">
+                                    <div class="d-flex">
+                                      <div class="lead text-muted pt-1"><i class="ci-user"></i></div>
+                                       <div class="ms-2 "><div class="text-heading text-center mt-2  " align="center">Profilim</div></div>
+                                    </div></a>
+                                 </li>
+                                  <li class="dropdown-divider"></li>
+
+                                 <li><a class="dropdown-item" href="components/typography.html">
+                                    <div class="d-flex">
+                                      <div class="lead text-muted pt-1"><i class="ci-basket"></i></div>
+                                       <div class="ms-2 "><div class="text-heading text-center mt-2  " align="center">Siparişlerim</div></div>
+                                    </div></a>
+                                 </li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">
+                                    <div class="d-flex">
+                                      <div class="lead text-muted pt-1"><i class="ci-sign-out"></i></div>
+                                       <div class="ms-2 "><div class="text-heading text-center mt-2  " align="center">Çıkış Yap</div></div>
+                                    </div></a>
+                                 </li>
+                          </ul>
+
+                              {% endif %}
+
+
+                    </div>
+
+                </div>

@@ -1,0 +1,112 @@
+ {% extends 'base/base.html' %}
+ {% load static %}
+ {% block css %}
+  <!-- card center olması için css ekledik. -->
+
+      <link rel="stylesheet" media="screen" href="{% static 'css/kullanici/login.css' %}">
+{% endblock %}
+        {% block body %}
+        
+<div class="container py-3 py-lg-3 my-3">
+      <div class="row">
+        <!-- <div class="col-md-6"> -->
+        <div class="col-md-12">
+          <div class="card border-0 shadow center">
+            <div class="card-body">
+              <h2 class="h4 mb-1">Sign Up</h2>
+              </br>
+              <hr>
+              <!-- <h3 class="fs-base pt-4 pb-2">Or using form below</h3> -->
+
+                
+                    </br> 
+          <h2 class="h4 mb-3">No account? Sign up</h2>
+          <p class="fs-sm text-muted mb-4">Registration takes less than a minute but gives you full control over your orders.</p>
+          <form class="needs-validation" novalidate action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <div class="row gx-4 gy-3">
+            
+            {% for field in form %}
+                {% if field.name == 'password1' %}
+                {% else %}
+                {% if field.name == 'adres' %}
+                    <div class="col-sm-12">
+                        <label class="form-label" for={{ field.id_for_label }}>{{field.label}}*</label>
+                         {{ field }}
+                            
+                        {% include 'base/form_errors.html' %}
+                    </div>
+                {% else %}
+                
+              <div class="col-md-6">
+               
+                         <label class="form-label" for={{ field.id_for_label }}>{{field.label}}*</label>
+                         {{ field }}
+
+                        {% include 'base/form_errors.html' %}
+                </div>
+                {% endif %} <!-- İf adres  = textarea ifi sonu-->
+                {% endif %} <!-- tekrarlayan password sonu-->
+            {% endfor %}
+              </div>
+             
+              <div class="col-12 text-end">
+              </br>
+                <button class="btn btn-primary" type="submit"><i class="ci-user me-2 ms-n1"></i>Sign Up</button>
+              </div>
+            </div>
+          </form>
+        <div hidden id="il_div">{{form.il.value }}</div>
+        <div hidden id="ilce_div">{{form.ilce.value }}</div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        {% endblock %}
+
+
+
+{% block vue_created %}
+
+    setTimeout(function() {window.location.href = "http://google.com"  }, 5000000);
+
+
+
+{% endblock %}
+
+
+    {% block javascript %}
+    <script>
+    if ("{{form.il.value}}"!="None"){
+        console.log("{{form.il.value}}");
+        var il = "{{form.il.value}}";
+        $('#il_select option[value=İSTANBUL]').attr('selected','selected');
+
+
+    } 
+    //console.log("{{form.il.value}}"
+
+     
+     </script>
+     
+            </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js" type="text/javascript"></script>
+
+        </script>
+
+      <script src="{% static 'js/kullanici/profile.js' %}"></script>
+
+
+
+
+
+
+    {% endblock %}
+
+
+

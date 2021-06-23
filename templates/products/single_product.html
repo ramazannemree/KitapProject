@@ -1,0 +1,251 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+    <!-- Page Title-->
+    <div class="page-title-overlap bg-accent pt-4">
+      <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+        <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+              <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
+              <li class="breadcrumb-item text-nowrap"><a href="marketplace-category.html">Market</a>
+              </li>
+              <li class="breadcrumb-item text-nowrap active" aria-current="page">Single Item</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+           <h1 class="h3 text-light mb-0">{{ product.product_name }}</h1>
+        </div>
+      </div>
+    </div>
+    <!-- Shadow box-->
+    <section class="container mb-3 pb-3">
+      <div class="bg-light shadow-lg rounded-3 overflow-hidden">
+        <div class="row">
+          <!-- Content-->
+          <section class="col-lg-8 pt-2 pt-lg-4 pb-4 mb-lg-3">
+            <div class="pt-3 px-4 pe-lg-0 ps-xl-5">
+              <!-- Product gallery-->
+              <div class="product-gallery">
+                <div class="product-gallery-preview order-sm-2">
+                  {% for image in images %}
+                  {% if forloop.counter == 1 %}
+                  <div class="product-gallery-preview-item active" id="image_{{ image.id }}"><img src="{{ image.image.url }}" alt="Product image"></div>
+                  {% else %}
+                  <div class="product-gallery-preview-item" id="image_{{ image.id }}"><img src="{{ image.image.url }}" alt="Product image"></div>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="product-gallery-thumblist order-sm-1">
+                  {% for image in images %}
+                  {% if forloop.counter == 1 %}
+                  <a class="product-gallery-thumblist-item active" href="#image_{{ image.id }}"><img src="{{ image.image.url }}" alt="Product thumb"></a>
+                  {% else %}
+                  <a class="product-gallery-thumblist-item" href="#image_{{ image.id }}"><img src="{{ image.image.url }}" alt="Product thumb"></a>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- Wishlist + Sharing-->
+              <div class="d-flex flex-wrap justify-content-between align-items-center border-top pt-3">
+                <div class="py-2 me-2">
+                  <a href="{% url 'add_favorite' product.id %}">
+                  <button class="btn btn-outline-accent" type="button"><i {% if is_favorite %} class="icon-heart fs-lg me-2" {% else %} class="icon-heart-empty fs-lg me-2" {% endif %}></i>{% if is_favorite %} Favorilere Eklendi {% else %} Favorilere Ekle {% endif %}</button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Sidebar-->
+          <aside class="col-lg-4 ps-xl-5">
+            <hr class="d-lg-none">
+            <div class="bg-white h-100 p-4 ms-auto border-start">
+              <div class="px-lg-2">
+                <div class="accordion accordion-flush" id="licenses">
+                  <div class="accordion-item border-bottom">
+                    <div class="accordion-header d-flex justify-content-between align-items-center py-3">
+                      <div class="form" >
+                        <label class="form-check-label fw-medium text-dark" for="license-std">Fiyat</label>
+                      </div>
+                      <h5 class="mb-0 text-accent fw-normal">{{ product.price }}₺</small></h5>
+                    </div>
+                    <div class="accordion-collapse collapse show" id="standard-license" data-bs-parent="#licenses">
+                      <div class="accordion-body py-0 pb-2">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a href="{% url 'add_basket' product.id %}"><button class="btn btn-primary btn-shadow d-block w-100 mt-4" type="button"><i class="ci-cart fs-lg me-2"></i>{% if is_basket %} Sepete Eklendi {% else %} Sepete Ekle {% endif %}</button></a>
+                <div class="bg-secondary rounded p-3 mt-4 mb-2"><a class="d-flex align-items-center" href="#"><img class="rounded-circle" src="{% static 'img/testimonials/01.jpg' %}" width="50" alt="Sara Palson">
+                    <div class="ps-2"><span class="fs-ms text-muted">Satıcı</span>
+                      <h6 class="fs-sm mb-0">{{ product.user }}</h6>
+                    </div></a></div>
+                <div class="bg-secondary rounded p-3 mb-4">
+                  <div class="star-rating">
+                    <i {% if avg_rate > 0 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                    <i {% if avg_rate > 1 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                    <i {% if avg_rate > 2 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                    <i {% if avg_rate > 3 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                    <i {% if avg_rate > 4 %} class="star-rating-icon ci-star-filled active" {% else %} class="star-rating-icon ci-star" {% endif %}></i>
+                  </div><span class="fs-ms ms-2">{{ avg_rate }}/5</span>
+                </div>
+                <ul class="list-unstyled fs-sm">
+                  <li class="d-flex justify-content-between mb-3 pb-3 border-bottom"><span class="text-dark fw-medium">Güncellenme Tarihi</span><span class="text-muted">{{ product.updated_time }}</span></li>
+                  <li class="d-flex justify-content-between mb-3 pb-3 border-bottom"><span class="text-dark fw-medium">Oluşturulma Tarihi</span><span class="text-muted">{{ product.created_time }}</span></li>                  
+                  <li class="d-flex justify-content-between mb-3 pb-3 border-bottom"><span class="text-dark fw-medium">Kategori</span><a class="product-meta" href="#">{% for cat in categories %} {{ cat }}, {% endfor %}</a></li>
+                </ul>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+    <!-- Product description + Reviews + Comments-->
+    <section class="container mb-4 mb-lg-5">
+      <!-- Nav tabs-->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item"><a class="nav-link p-4 active" href="#details" data-bs-toggle="tab" role="tab">Ürün detay</a></li>
+        <li class="nav-item"><a class="nav-link p-4" href="#reviews" data-bs-toggle="tab" role="tab">Yorumlar</a></li>
+      </ul>
+      <div class="tab-content pt-2">
+        <!-- Product details tab-->
+        <div class="tab-pane fade show active" id="details" role="tabpanel">
+          <div class="row">
+            <div class="col-lg-8">
+              <p class="fs-md">{{product.detail}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="reviews" role="tabpanel">
+          {% include 'products/reviews.html' %}
+        </div>
+      </div>
+    </section>
+    <!-- Related products carousel-->
+    <section class="container mb-5 pb-lg-3">
+      <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-4 mb-4">
+        <h2 class="h3 mb-0 pt-2">Related mockups</h2>
+        <div class="pt-2"><a class="btn btn-outline-accent btn-sm" href="marketplace-category.html">More mockups<i class="ci-arrow-end ms-1 me-n1"></i></a></div>
+      </div>
+      <!-- Carousel-->
+      <div class="tns-carousel">
+        <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;gutter&quot;: 16, &quot;controls&quot;: false, &quot;nav&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2 },&quot;768&quot;:{&quot;items&quot;:3}, &quot;992&quot;:{&quot;items&quot;:4}}}">
+          <!-- Product-->
+          <div>
+            <div class="card product-card-alt">
+              <div class="product-thumb">
+                <button class="btn-wishlist btn-sm" type="button"><i class="ci-heart"></i></button>
+                <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="#"><i class="ci-eye"></i></a>
+                  <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button"><i class="ci-cart"></i></button>
+                </div><a class="product-thumb-overlay" href="#"></a><img src="{% static 'img/marketplace/products/02.jpg' %}" alt="Product">
+              </div>
+              <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
+                  <div class="text-muted fs-xs me-1">by <a class="product-meta fw-medium" href="#">Createx Std. </a>in <a class="product-meta fw-medium" href="#">Graphics</a></div>
+                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
+                  </div>
+                </div>
+                <h3 class="product-title fs-sm mb-2"><a href="#">Floating Phone and Tablet Mockup</a></h3>
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                  <div class="fs-sm me-2"><i class="ci-download text-muted me-1"></i>109<span class="fs-xs ms-1">Sales</span></div>
+                  <div class="bg-faded-accent text-accent rounded-1 py-1 px-2">$15.<small>00</small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Product-->
+          <div>
+            <div class="card product-card-alt">
+              <div class="product-thumb">
+                <button class="btn-wishlist btn-sm" type="button"><i class="ci-heart"></i></button>
+                <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="#"><i class="ci-eye"></i></a>
+                  <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button"><i class="ci-cart"></i></button>
+                </div><a class="product-thumb-overlay" href="#"></a><img src="{% static 'img/marketplace/products/03.jpg' %}" alt="Product">
+              </div>
+              <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
+                  <div class="text-muted fs-xs me-1">by <a class="product-meta fw-medium" href="#">Createx Std. </a>in <a class="product-meta fw-medium" href="#">Graphics</a></div>
+                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
+                  </div>
+                </div>
+                <h3 class="product-title fs-sm mb-2"><a href="#">Project Devices Showcase (PSD)</a></h3>
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                  <div class="fs-sm me-2"><i class="ci-download text-muted me-1"></i>95<span class="fs-xs ms-1">Sales</span></div>
+                  <div class="bg-faded-accent text-accent rounded-1 py-1 px-2">$18.<small>00</small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Product-->
+          <div>
+            <div class="card product-card-alt">
+              <div class="product-thumb">
+                <button class="btn-wishlist btn-sm" type="button"><i class="ci-heart"></i></button>
+                <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="#"><i class="ci-eye"></i></a>
+                  <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button"><i class="ci-cart"></i></button>
+                </div><a class="product-thumb-overlay" href="#"></a><img src="{% static 'img/marketplace/products/08.jpg' %}" alt="Product">
+              </div>
+              <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
+                  <div class="text-muted fs-xs me-1">by <a class="product-meta fw-medium" href="#">pixels </a>in <a class="product-meta fw-medium" href="#">Graphics</a></div>
+                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
+                  </div>
+                </div>
+                <h3 class="product-title fs-sm mb-2"><a href="#">Business Card Branding Mockup</a></h3>
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                  <div class="fs-sm me-2"><i class="ci-download text-muted me-1"></i>316<span class="fs-xs ms-1">Sales</span></div>
+                  <div class="bg-faded-accent text-accent rounded-1 py-1 px-2">$17.<small>00</small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Product-->
+          <div>
+            <div class="card product-card-alt">
+              <div class="product-thumb">
+                <button class="btn-wishlist btn-sm" type="button"><i class="ci-heart"></i></button>
+                <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="#"><i class="ci-eye"></i></a>
+                  <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button"><i class="ci-cart"></i></button>
+                </div><a class="product-thumb-overlay" href="#"></a><img src="{% static 'img/marketplace/products/07.jpg' %}" alt="Product">
+              </div>
+              <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
+                  <div class="text-muted fs-xs me-1">by <a class="product-meta fw-medium" href="#">pixels </a>in <a class="product-meta fw-medium" href="#">Graphics</a></div>
+                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                  </div>
+                </div>
+                <h3 class="product-title fs-sm mb-2"><a href="#">Gravity Device Mockups (PSD)</a></h3>
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                  <div class="fs-sm me-2"><i class="ci-download text-muted me-1"></i>234<span class="fs-xs ms-1">Sales</span></div>
+                  <div class="bg-faded-accent text-accent rounded-1 py-1 px-2">$16.<small>00</small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  {% endblock %}
+
+{% block javascript %}
+<script>
+  $(".product_comment").slice(0,5).show();
+  $("#loadmore").on('click',function(){
+    $(".product_comment:hidden").slice(0,5).show();
+    if($(".product_comment:hidden").length == 0){
+      $("#loadmore").fadeOut();
+    }
+  })
+</script>
+{% endblock %}
+
+  {% block vue %}
+  {% endblock %}

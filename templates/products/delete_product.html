@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block body %}
+<body class="handheld-toolbar-enabled">
+    <div class="container mb-5 pb-3  pt-4 ">
+      <div class="bg-light shadow-lg rounded-3 overflow-hidden ">
+        <div class="row d-flex justify-content-center">
+          <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+            <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+              <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2 ">
+                <p>{{ product }} ürününü silmek istediğinize emin misiniz?</p>
+                    <form action="{% url 'delete_product' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <a href="{% url 'view_products' %}">Hayır</a>
+                        <input type="submit" name="Evet" value="Evet">
+                    </form>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+
+{% endblock %}

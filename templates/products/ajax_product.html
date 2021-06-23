@@ -1,0 +1,14 @@
+{% for product in products %}
+            <div class="product-box">
+              <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><a href="{% url 'detail_product' product.id %}" class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="{% url 'detail_product' product.id %}" style="width: 12.5rem;"><img style="width:10rem;" class="rounded-3" src="{{ product.first_image }}" alt="{{ product.title }}"></a>
+                <div class="text-center text-sm-start">
+                  <h3 class="h6 product-title mb-2"><a href="{% url 'detail_product' product.id %}">{{ product.product_name }}</a></h3>
+                  <div class="d-inline-block text-accent">{{ product.price }}</div>
+                  <div class="d-flex justify-content-center justify-content-sm-start pt-3">
+                    <a href="{% url 'edit_product' product.id %}" class="btn bg-faded-info btn-icon me-2" type="button" data-bs-toggle="tooltip" title="Edit"><i class="ci-edit text-info"></i></a>
+                    <a href="{% url 'delete_product' product.id %}" class="btn bg-faded-danger btn-icon" type="button" data-bs-toggle="tooltip" title="Delete"><i class="ci-trash text-danger"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endfor %} 
