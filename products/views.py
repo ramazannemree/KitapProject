@@ -16,12 +16,50 @@ from basket.views import basket_product_list
 
 def home(request):
     products_in_basket,products_count,total_price = basket_product_list(request)
+    products = Product.objects.all()[:16]
     categories = Category.objects.all()
+    rate_list1=[]
+    rate_list2=[]
+    for i in products[:8]:
+        is_fav =  False
+        is_basket =  False
+        rate = Comment.objects.filter(product_id = i.id)
+        category = i.categories.all()
+        if request.user.is_authenticated:
+            if Favorites.objects.filter(product_id=i.id,user=request.user).exists():
+                is_fav= True
+            if Basket.objects.filter(product_id=i.id,user=request.user).exists():
+                is_basket = True
+        avg_rate = rate.aggregate(Avg('rate'))
+        if avg_rate["rate__avg"]:
+            pass
+        else:
+            avg_rate["rate__avg"] = 0
+        rate_list1.append({'product':i,'rate':avg_rate,'fav':is_fav,'basket':is_basket, 'category':category})
+        
+    for i in products[8:16]:
+        is_fav =  False
+        is_basket =  False
+        rate = Comment.objects.filter(product_id = i.id)
+        category = i.categories.all()
+        if request.user.is_authenticated:
+            if Favorites.objects.filter(product_id=i.id,user=request.user).exists():
+                is_fav= True
+            if Basket.objects.filter(product_id=i.id,user=request.user).exists():
+                is_basket = True
+        avg_rate = rate.aggregate(Avg('rate'))
+        if avg_rate["rate__avg"]:
+            pass
+        else:
+            avg_rate["rate__avg"] = 0
+        rate_list2.append({'product':i,'rate':avg_rate,'fav':is_fav,'basket':is_basket, 'category':category})
     context ={
         'total_price' : total_price,
         'products_in_basket' : products_in_basket,
         'products_count' : products_count,
-        'categories' : categories
+        'categories' : categories,
+        'rate_list1' : rate_list1,
+        'rate_list2' : rate_list2,
     }
     return render(request,'products/homepage.html',context)
 
@@ -328,7 +366,6 @@ def search(request):
             return render(request,'products/categorypage.html',context)
     return redirect('home')
 
-##yanlış yerde açılıyor
 def auto_complete(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
