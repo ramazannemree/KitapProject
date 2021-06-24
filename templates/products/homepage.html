@@ -13,7 +13,7 @@
                 {% for cat in categories %}
                 <div class="col-md-2 px-5 mb-grid-gutter">
                     <a class="d-block text-center text-decoration-none me-1" href="{% url 'category_page' cat.slug %}">
-                    <img class="d-block mb-3" src="{{ cat.image.url }}" alt="{{ cat.category_name }}">
+                    <img class="d-block img-fluid mb-3" src="{{ cat.image.url }}" alt="{{ cat.category_name }}">
                     <h3 class="fs-base pt-1 mb-0">{{ cat.category_name }}</h3></a>
                   </div>
                 {% endfor %}
