@@ -11,7 +11,7 @@ from django.conf import settings
 
 
 def mail_gonder(user,body,subject="Mail Onayı",url_name="activate"):
-    current_site = "localhost:8000"
+    current_site = "http://143.198.170.174"
     message = render_to_string('kullanici/mail.html',{'user': user,'body':body,'domain':current_site,'uid': urlsafe_base64_encode(force_bytes(user.pk)),'token':generate_token.make_token(user),'url_name':url_name})
     email = EmailMessage(subject,message,settings.EMAIL_HOST_USER,[user.email])
     try:
