@@ -34,7 +34,7 @@
             <button class="btn-wishlist btn-sm" type="button" title="Favorilere ekle">
               <a href="{% url 'add_favorite' i.product.id %}"><i {% if i.fav %} class="icon-heart" {% else %} class="icon-heart-empty" {% endif %}></i></a></button>
               <a class="card-img-top d-block overflow-hidden" href="{% url 'detail_product' i.product.id %}">
-                <img src="{{ i.product.first_image }}" alt="{{ i.product.product_name }}"></a>
+                <img style="height: 450px;" width="310" src="{{ i.product.first_image }}" class="img-rounded" alt="{{ i.product.product_name }}"></a>
             <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{% for cat in i.category %} {{ cat }} {% endfor %}</a>
               <h3 class="product-title fs-sm"><a href="{% url 'detail_product' i.product.id %}">{{ i.product.product_name }}</a></h3>
               <div class="d-flex justify-content-between">
@@ -87,7 +87,7 @@
             <button class="btn-wishlist btn-sm" type="button" title="Favorilere ekle">
               <a href="{% url 'add_favorite' i.product.id %}"><i {% if i.fav %} class="icon-heart" {% else %} class="icon-heart-empty" {% endif %}></i></a></button>
               <a class="card-img-top d-block overflow-hidden" href="{% url 'detail_product' i.product.id %}">
-                <img src="{{ i.product.first_image }}" alt="{{ i.product.product_name }}"></a>
+                <img style="height: 450px;" width="310" src="{{ i.product.first_image }}" alt="{{ i.product.product_name }}"></a>
             <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{% for cat in i.category %} {{ cat }} {% endfor %}</a>
               <h3 class="product-title fs-sm"><a href="{% url 'detail_product' i.product.id %}">{{ i.product.product_name }}</a></h3>
               <div class="d-flex justify-content-between">

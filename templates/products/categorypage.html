@@ -119,7 +119,7 @@
             <div class="col-md-4 col-sm-6 px-2 mb-4">
               <div class="card product-card">
                 <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><a href="{% url 'add_favorite' i.product.id %}"><i {% if i.fav %} class="icon-heart" {% else %} class="icon-heart-empty" {% endif %}></i></a></button>
-                <a class="card-img-top d-block overflow-hidden" href="{% url 'detail_product' i.product.id %}"><img src="{{ i.product.first_image }}" alt="Product"></a>
+                <a class="card-img-top d-block overflow-hidden" href="{% url 'detail_product' i.product.id %}"><img style="width:260px;height:400px;" src="{{ i.product.first_image }}" alt="Product"></a>
                 <div class="card-body py-2">
                   <h3 class="product-title fs-sm"><a href="{% url 'detail_product' i.product.id %}">{{ i.product.product_name }}</a></h3>
                   <div class="d-flex justify-content-between">

@@ -16,7 +16,7 @@
 
                 {% else %}
               <!-- Comment-->
-              <div class="d-flex align-items-start border-bottom py-4 mt-4"><img class="rounded-circle" src="{% static request.user.profile.image %}" width="50" alt="Susan Gardner">
+              <div class="d-flex align-items-start border-bottom py-4 mt-4"><img class="img-rounded" src="{{ request.user.profile.image.url }}" width="50" alt="Susan Gardner">
                 <div class="ps-3">
                   <h6 class="fs-md mb-2">{{ request.user.first_name|title }} {{ request.user.last_name|title }}</h6>
                   <p class="fs-md mb-1">{{ mesaj.msg_text }}</p><span class="fs-ms text-muted"><i class="ci-time align-middle me-2"></i>{{ mesaj.message_time }}</span>
